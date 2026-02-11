@@ -1,0 +1,309 @@
+/* ===== Layout ===== */
+
+.restaurant-dashboard {
+  padding: 24px;
+  background: #f7f8fa;
+  min-height: calc(100vh - 60px);
+}
+
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.sub-text {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* ===== Grid ===== */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* ===== Cards ===== */
+
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ===== Products ===== */
+
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.product-card {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  background: #fafafa;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.product-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.category {
+  font-size: 13px;
+  color: #666;
+}
+
+.product-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.price {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* ===== Buttons ===== */
+
+.danger-btn {
+  background: #ff4d4f;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.danger-btn:hover {
+  opacity: 0.9;
+}
+
+/* ===== Empty & Loading ===== */
+
+.empty-text {
+  font-size: 14px;
+  color: #777;
+}
+
+.loading-text {
+  padding: 20px;
+  font-size: 15px;
+}
+
+/* ===== Orders ===== */
+
+.orders-section {
+  margin-top: 12px;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Orders ===== */
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.order-id {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.order-total {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.status-badge {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+/* Status colors */
+.status-badge.pending {
+  background: #fff7e6;
+  color: #d48806;
+}
+
+.status-badge.accepted {
+  background: #e6fffb;
+  color: #08979c;
+}
+
+.status-badge.preparing {
+  background: #e6f7ff;
+  color: #096dd9;
+}
+
+.status-badge.delivered {
+  background: #f6ffed;
+  color: #389e0d;
+}
+
+.status-badge.cancelled {
+  background: #fff1f0;
+  color: #cf1322;
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #444;
+}
+
+/* ===== Order Actions ===== */
+
+.order-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+}
+
+.action-btn.primary {
+  background: #1677ff;
+  color: #fff;
+}
+
+.action-btn.success {
+  background: #52c41a;
+  color: #fff;
+}
+
+.action-btn.danger {
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.product-image {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+/* ===== Add Product Form ===== */
+
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-group input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1677ff;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Button spacing */
+.add-product-form .btn {
+  margin-top: 6px;
+  align-self: flex-start;
+}

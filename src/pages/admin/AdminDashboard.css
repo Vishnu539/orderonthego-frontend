@@ -1,0 +1,293 @@
+.admin-dashboard {
+  padding: 24px;
+  background: #f6f8fb;
+  min-height: calc(100vh - 64px);
+}
+
+/* GRID */
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* CARD */
+.admin-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-card h3 {
+  margin-bottom: 12px;
+}
+
+/* SCROLLABLE LISTS */
+.admin-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+/* USERS SCROLL */
+.admin-card.users-list ul {
+  max-height: 240px;
+}
+
+/* RESTAURANTS SCROLL */
+.admin-card.restaurants-list ul {
+  max-height: 240px;
+}
+
+/* ORDERS SCROLL */
+/* ===== ADMIN ORDERS ===== */
+
+.admin-orders {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.admin-order-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: #fafafa;
+  border: 1px solid #eee;
+
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-order-row:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* LEFT */
+.order-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.order-id {
+  font-weight: 600;
+  font-size: 14px;
+  color: #111827;
+}
+
+/* RIGHT */
+.order-right {
+  display: flex;
+  align-items: center;
+}
+
+.order-amount {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* STATUS BADGES (reuse your colors, slightly refined) */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-badge.pending {
+  background: #fff7e6;
+  color: #d48806;
+}
+
+.status-badge.accepted {
+  background: #e6fffb;
+  color: #08979c;
+}
+
+.status-badge.preparing {
+  background: #e6f7ff;
+  color: #096dd9;
+}
+
+.status-badge.delivered {
+  background: #f6ffed;
+  color: #389e0d;
+}
+
+.status-badge.cancelled {
+  background: #fff1f0;
+  color: #cf1322;
+}
+
+/* LIST ITEMS */
+.admin-card li {
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+/* RESTAURANT ROW */
+.restaurant-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 6px 0;
+}
+
+.restaurant-name {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* BADGES */
+.status-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status-badge.approved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.pending,
+.status-badge.approved {
+  white-space: nowrap;
+}
+
+/* BUTTONS */
+.approve-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: none;
+  background: #16a34a;
+  color: white;
+  cursor: pointer;
+}
+
+.approve-btn:hover {
+  background: #15803d;
+}
+
+.danger-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: none;
+  background: #dc2626;
+  color: white;
+  cursor: pointer;
+}
+
+.danger-btn:hover {
+  background: #b91c1c;
+}
+
+/* FULL WIDTH CARD */
+.full-width {
+  grid-column: span 2;
+}
+
+/* LOADING */
+.loading {
+  padding: 24px;
+}
+
+/* ===============================
+   DELETE MODAL
+================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal {
+  background: white;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 420px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal h3 {
+  margin-bottom: 12px;
+}
+
+.modal-warning {
+  font-size: 14px;
+  color: #b91c1c;
+  margin-bottom: 12px;
+}
+
+.modal-hint {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+.modal input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 10px;
+}
+
+.modal input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
