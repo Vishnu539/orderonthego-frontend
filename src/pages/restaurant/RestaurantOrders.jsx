@@ -4,6 +4,9 @@ import {
   updateOrderStatus,
 } from "../../api/restaurant.api";
 
+const formatDate = (date) =>
+  new Date(date).toLocaleString("en-IN");
+
 const RestaurantOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,43 +99,45 @@ const RestaurantOrders = () => {
     return null;
   };
 
-  if (loading) {
-    return <p className="loading-text">Loading orders...</p>;
-  }
-
-  if (orders.length === 0) {
+  if (loading) return <p className="loading-text">Loading orders...</p>;
+  if (orders.length === 0)
     return <p className="empty-text">No orders yet</p>;
-  }
 
   return (
     <div className="orders-list">
       {orders.map((order) => (
         <div key={order._id} className="order-card">
-          {/* Header */}
           <div className="order-header">
             <div>
-              <h4 className="order-id">Order #{order._id.slice(-6)}</h4>
+              <h4 className="order-id">
+                Order #{order._id.slice(-6)}
+              </h4>
+              <p className="order-time">
+                {formatDate(order.createdAt)}
+              </p>
               <span className={`status-badge ${order.status}`}>
                 {order.status}
               </span>
             </div>
 
-            <div className="order-total">₹{order.totalAmount}</div>
+            <div className="order-total">
+              ₹{order.totalAmount}
+            </div>
           </div>
 
-          {/* Items */}
           <div className="order-items">
             {order.items.map((item, idx) => (
               <div key={idx} className="order-item">
                 <span className="item-name">
                   {item.productId?.name || "Item"}
                 </span>
-                <span className="item-qty">× {item.quantity}</span>
+                <span className="item-qty">
+                  × {item.quantity}
+                </span>
               </div>
             ))}
           </div>
 
-          {/* Actions */}
           <div className="order-actions">
             {renderActions(order)}
           </div>
