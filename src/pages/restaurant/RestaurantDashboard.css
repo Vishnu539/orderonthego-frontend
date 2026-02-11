@@ -130,6 +130,12 @@
   margin-top: 12px;
 }
 
+.order-time {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 4px 0 6px 0;
+}
+
 /* ===== Responsive ===== */
 
 @media (max-width: 900px) {
@@ -306,4 +312,5 @@
 .add-product-form .btn {
   margin-top: 6px;
   align-self: flex-start;
+
 }
