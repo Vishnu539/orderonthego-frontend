@@ -17,3 +17,8 @@ export const getAllOrders = () =>
 
 export const loginAdmin = (data) =>
   api.post("/admin/login", data);
+
+export const deleteUser = (id, email) =>
+  api.delete(`/admin/users/${id}`, {
+    data: { email },
+  });
