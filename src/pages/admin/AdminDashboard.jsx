@@ -23,6 +23,11 @@ const AdminDashboard = () => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [error, setError] = useState("");
 
+  const totalRevenue = orders.reduce(
+    (sum, o) => sum + (o.totalAmount || 0),
+    0
+  );
+
   const fetchData = async () => {
     try {
       const [u, r, o] = await Promise.all([
@@ -96,6 +101,28 @@ const AdminDashboard = () => {
     <>
       <div className="admin-dashboard">
         <h2 className="admin-title">Admin Dashboard</h2>
+
+        <div className="summary-cards">
+          <div className="summary-card">
+            <p>Total Users</p>
+            <h3>{users.length}</h3>
+          </div>
+
+          <div className="summary-card">
+            <p>Total Restaurants</p>
+            <h3>{restaurants.length}</h3>
+          </div>
+
+          <div className="summary-card">
+            <p>Total Orders</p>
+            <h3>{orders.length}</h3>
+          </div>
+
+          <div className="summary-card">
+            <p>Total Revenue</p>
+            <h3>₹{totalRevenue}</h3>
+          </div>
+        </div>
 
         <div className="admin-grid">
           {/* USERS */}
