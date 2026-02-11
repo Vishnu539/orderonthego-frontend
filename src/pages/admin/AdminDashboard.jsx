@@ -4,9 +4,13 @@ import {
   getAllRestaurants,
   approveRestaurant,
   getAllOrders,
+  deleteUser,
 } from "../../api/admin.api";
 import api from "../../api/axios";
 import "./AdminDashboard.css";
+
+const formatDate = (date) =>
+  new Date(date).toLocaleString("en-IN");
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -14,11 +18,10 @@ const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔴 DELETE MODAL STATE
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [modalType, setModalType] = useState(null); // "user" | "restaurant"
+  const [selectedItem, setSelectedItem] = useState(null);
   const [confirmEmail, setConfirmEmail] = useState("");
-  const [deleteError, setDeleteError] = useState("");
+  const [error, setError] = useState("");
 
   const fetchData = async () => {
     try {
@@ -47,48 +50,47 @@ const AdminDashboard = () => {
     fetchData();
   };
 
-  /* ---------------- DELETE FLOW ---------------- */
-
-  const openDeleteModal = (restaurant) => {
-    setSelectedRestaurant(restaurant);
+  const openDeleteModal = (type, item) => {
+    setModalType(type);
+    setSelectedItem(item);
     setConfirmEmail("");
-    setDeleteError("");
-    setShowDeleteModal(true);
+    setError("");
   };
 
-  const closeDeleteModal = () => {
-    setShowDeleteModal(false);
-    setSelectedRestaurant(null);
+  const closeModal = () => {
+    setModalType(null);
+    setSelectedItem(null);
     setConfirmEmail("");
-    setDeleteError("");
+    setError("");
   };
 
   const confirmDelete = async () => {
-    if (!selectedRestaurant) return;
+    if (!selectedItem) return;
 
-    if (confirmEmail !== selectedRestaurant.email) {
-      setDeleteError("Email does not match. Please type the exact email.");
+    if (confirmEmail !== selectedItem.email) {
+      setError("Email does not match.");
       return;
     }
 
     try {
-      await api.delete(
-        `/admin/restaurants/${selectedRestaurant._id}`,
-        {
+      if (modalType === "restaurant") {
+        await api.delete(`/admin/restaurants/${selectedItem._id}`, {
           data: { email: confirmEmail },
-        }
-      );
+        });
+      } else {
+        await deleteUser(selectedItem._id, confirmEmail);
+      }
 
-      closeDeleteModal();
+      closeModal();
       fetchData();
     } catch (err) {
-      setDeleteError(
-        err.response?.data?.message || "Failed to delete restaurant"
+      setError(
+        err.response?.data?.message || "Delete failed"
       );
     }
   };
 
-  if (loading) return <p className="loading">Loading admin dashboard...</p>;
+  if (loading) return <p className="loading">Loading...</p>;
 
   return (
     <>
@@ -97,116 +99,132 @@ const AdminDashboard = () => {
 
         <div className="admin-grid">
           {/* USERS */}
-          <div className="admin-card users-list">
+          <div className="admin-card">
             <h3>Users ({users.length})</h3>
-            <ul>
-              {users.map((u) => (
-                <li key={u._id}>{u.email}</li>
-              ))}
-            </ul>
+
+            {users.map((u) => (
+              <div key={u._id} className="admin-user-row">
+                <div>
+                  <strong>{u.username}</strong>
+                  <p>{u.email}</p>
+                  <small>Joined: {formatDate(u.createdAt)}</small>
+                </div>
+
+                <button
+                  className="danger-btn"
+                  onClick={() => openDeleteModal("user", u)}
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
           </div>
 
           {/* RESTAURANTS */}
           <div className="admin-card">
-            <h3>Restaurants</h3>
+            <h3>Restaurants ({restaurants.length})</h3>
 
-            <ul>
-              {restaurants.map((r) => (
-                <li key={r._id} className="restaurant-row restaurants-list">
-                  {/* LEFT: NAME */}
-                  <span className="restaurant-name">
-                    {r.name || r.email}
-                  </span>
+            {restaurants.map((r) => (
+              <div key={r._id} className="restaurant-row">
+                <div>
+                  <strong>{r.name}</strong>
+                  <p>{r.email}</p>
+                  <small>
+                    Joined: {formatDate(r.createdAt)}
+                  </small>
+                </div>
 
-                  {/* MIDDLE: STATUS */}
-                  <span
-                    className={`status-badge ${
-                      r.isApproved ? "approved" : "pending"
-                    }`}
+                <span
+                  className={`status-badge ${
+                    r.isApproved ? "approved" : "pending"
+                  }`}
+                >
+                  {r.isApproved ? "Approved" : "Pending"}
+                </span>
+
+                {!r.isApproved ? (
+                  <button
+                    className="approve-btn"
+                    onClick={() => handleApprove(r._id)}
                   >
-                    {r.isApproved ? "Approved" : "Pending"}
-                  </span>
-
-                  {/* RIGHT: ACTION */}
-                  {!r.isApproved ? (
-                    <button
-                      className="approve-btn"
-                      onClick={() => handleApprove(r._id)}
-                    >
-                      Approve
-                    </button>
-                  ) : (
-                    <button
-                      className="danger-btn"
-                      onClick={() => openDeleteModal(r)}
-                    >
-                      Delete
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ul>
+                    Approve
+                  </button>
+                ) : (
+                  <button
+                    className="danger-btn"
+                    onClick={() =>
+                      openDeleteModal("restaurant", r)
+                    }
+                  >
+                    Delete
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
 
           {/* ORDERS */}
-          <div className="admin-card full-width orders-list">
-            <h3>All Orders</h3>
+          <div className="admin-card full-width">
+            <h3>Orders ({orders.length})</h3>
 
-            {orders.length === 0 ? (
-              <p className="empty-text">No orders yet</p>
-            ) : (
-              <div className="admin-orders">
-                {orders.map((o) => (
-                  <div key={o._id} className="admin-order-row">
-                    <div className="order-left">
-                      <span className="order-id">#{o._id.slice(-6)}</span>
-                      <span className={`status-badge ${o.status}`}>
-                        {o.status}
-                      </span>
-                    </div>
+            {orders.map((o) => (
+              <div key={o._id} className="admin-order-row detailed">
+                <div>
+                  <strong>#{o._id.slice(-6)}</strong>
+                  <p>
+                    User: {o.userId?.username} (
+                    {o.userId?.email})
+                  </p>
+                  <p>Items: {o.items?.length || 0}</p>
+                  <p>Payment: {o.paymentMethod}</p>
+                  <small>
+                    {formatDate(o.createdAt)}
+                  </small>
+                </div>
 
-                    <div className="order-right">
-                      <span className="order-amount">₹{o.totalAmount || 0}</span>
-                    </div>
-                  </div>
-                ))}
+                <div>
+                  <span
+                    className={`status-badge ${o.status}`}
+                  >
+                    {o.status}
+                  </span>
+                  <p className="order-amount">
+                    ₹{o.totalAmount}
+                  </p>
+                </div>
               </div>
-            )}
+            ))}
           </div>
         </div>
       </div>
 
-      {/* ================= DELETE MODAL ================= */}
-      {showDeleteModal && (
+      {modalType && (
         <div className="modal-overlay">
           <div className="modal">
-            <h3>Delete Restaurant</h3>
+            <h3>
+              Delete {modalType === "user" ? "User" : "Restaurant"}
+            </h3>
 
-            <p className="modal-warning">
-              This will permanently delete the restaurant and all its products.
-              <br />
-              This action <strong>cannot</strong> be undone.
-            </p>
-
-            <p className="modal-hint">
-              Type the restaurant email to confirm:
+            <p>
+              Type the email to confirm permanent deletion:
             </p>
 
             <input
               type="email"
-              placeholder={selectedRestaurant.email}
               value={confirmEmail}
-              onChange={(e) => setConfirmEmail(e.target.value)}
+              onChange={(e) =>
+                setConfirmEmail(e.target.value)
+              }
             />
 
-            {deleteError && (
-              <p className="error-text">{deleteError}</p>
+            {error && (
+              <p className="error-text">{error}</p>
             )}
 
             <div className="modal-actions">
               <button
                 className="btn btn-outline"
-                onClick={closeDeleteModal}
+                onClick={closeModal}
               >
                 Cancel
               </button>
