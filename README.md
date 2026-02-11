@@ -1,16 +1,107 @@
-# React + Vite
+# OrderOnTheGo – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This repository contains the frontend implementation of OrderOnTheGo built using React and Vite.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The frontend provides:
 
-## React Compiler
+- Modern responsive UI
+- Role-based routing
+- Multi-dashboard system
+- Order lifecycle tracking
+- Admin analytics
+- Clean structured components
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React (Vite)
+- React Router
+- Context API
+- Axios
+- CSS
+- Vercel (Deployment)
+
+---
+
+## User Features
+
+- Browse restaurants
+- View restaurant menus
+- Add items to cart
+- Place multi-restaurant orders
+- Track order status
+- View order history
+
+---
+
+## Restaurant Dashboard
+
+- Add products (with image upload)
+- Delete products
+- View latest orders (sorted newest first)
+- View order timestamps
+- Update order status (pending → accepted → preparing → delivered)
+
+---
+
+## Admin Dashboard
+
+- View total users
+- View total restaurants
+- View total orders
+- View total revenue
+- Approve restaurants
+- Delete users & restaurants
+- View all orders (latest first)
+- Summary analytics cards
+
+---
+
+## Environment Variable
+
+Create a `.env` file in the root directory with:
+
+VITE_API_BASE_URL=https://orderonthego-backend-5dmw.onrender.com/api
+
+---
+
+## Run Locally
+
+npm install  
+npm run dev  
+
+Runs at:
+
+http://localhost:5173
+
+---
+
+## Deployment
+
+Frontend deployed on Vercel:
+
+https://your-vercel-url.vercel.app
+
+---
+
+## Key Features Implemented
+
+- Multi-role authentication
+- Secure role-based routing
+- Multi-restaurant cart splitting
+- Isolated restaurant order visibility
+- Order lifecycle management
+- Admin moderation system
+- Summary dashboard analytics
+- Responsive UI
+
+---
+
+## Internship Submission
+
+Developed as part of the Long-Term Internship Program – Full Stack Development.
+
+All required deliverables including screenshots, project documentation, and live application links are provided.
