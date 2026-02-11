@@ -23,10 +23,9 @@ const AdminDashboard = () => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [error, setError] = useState("");
 
-  const totalRevenue = orders.reduce(
-    (sum, o) => sum + (o.totalAmount || 0),
-    0
-  );
+const totalRevenue = orders
+  .filter(o => o.status === "delivered")
+  .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
 
   const fetchData = async () => {
     try {
@@ -271,3 +270,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
